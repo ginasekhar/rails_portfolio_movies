@@ -1,0 +1,50 @@
+Root path - welcome page
+    <h1> Welcome to Fresh Meadows Multiplex Theater </h1>
+    we are a multiplex with many of the latest movies. reclining seats, gourmet snacks and beverages
+    Address and Phone number 
+ if not logged in
+ links to login or signup
+ else
+ links movies index or signout
+    *** As in Nav bar, give options to login or signup ***
+
+
+Once logged in, direct them to home Movies index page
+
+
+Movies index page:
+    add column to movies - currently playing flag
+    if current_user is theater owner 
+        1.Lists all movies (with link to show movie)
+        2. link to movie#new page
+        4. link to tickets stats page?
+    else (movie goer)
+        list of all movies you can watch based on your age (with link to show movie)
+        show all tickets you have for today or later - incl date, movie title (link to show movie)
+    end
+
+    Movies show page
+        1.Show movie details 
+        2. link to movie#edit
+        3.back link to index page
+        if current_user is theater owner  
+            list dates and count of tickets sold for this movie
+                    if they click on date, list of users who bought tickets
+        else 
+            if they have a ticket, should I allow them to change the date? or delete?
+            allow user to purchase a ticket (they enter date)(validate they don't already have another for same date)
+        end
+        
+    end
+
+Users:
+
+    Use devise provided views.
+    Add - columns to users - theater_owner flag, age, name, favorite genre of movie
+    if current_user is admin
+        list users (index)
+        edit user - change theater_owner flag, 
+    else
+        edit your own user record - age, name and favorite genre
+    end
+    
