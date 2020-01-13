@@ -1,0 +1,18 @@
+<%= form_for @movie do |f| %>
+  <%= f.label :title, "Title" %>
+    <%= f.text_field :title %>
+    <br>
+    <%= f.label :description , "Description" %>
+    <%= f.text_area :description %>
+    <br>
+    <%= f.label :genre, "Genre" %>
+    <%= f.options_for_select :genre %>
+    <br>
+    <%= f.label :release_date, "Release Date" %>
+    <%= f.date_field :release_date %>
+    <br>
+    <%= f.label :rating, "Rating" %>
+    <%= f.select :rating, options_for_select(["G", "PG", "PG-13", "R"], f.@movie.rating || "R") %>
+    <br>
+  <%= f.submit %>
+<% end %>

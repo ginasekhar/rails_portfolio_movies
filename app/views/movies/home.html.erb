@@ -1,0 +1,12 @@
+<% if current_user.theater_owner %>
+    <ul>
+        <li> Lists all movies (with link to show movie) - render partial index?  </li>
+        <li> link_to "Add a movie", new_movie_path </li>
+        <li> link to tickets stats page? </li>
+    </ul>
+<% else %>
+    <ul>
+        <li> list of all movies you can watch based on your age (with link to show movie) </li>
+        <li> show all tickets you have for today or later - incl date, movie title (link to show movie) </li>
+    </ul>
+<% end %>

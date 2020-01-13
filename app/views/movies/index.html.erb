@@ -1,0 +1,4 @@
+<h1> Your Movies </h1>
+<% @movies.each do |movie| %>
+    <h3>  <% link_to  movie.title, movie_path(movie)  %> <br> </h3>
+<% end %>
