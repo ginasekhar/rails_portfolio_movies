@@ -1,4 +1,15 @@
 <h1> Your Movies </h1>
+
+
 <% @movies.each do |movie| %>
     <h3>  <%= link_to  movie.title, movie_path(movie)  %> <br> </h3>
+<% end %>
+
+<% if current_user.theater_owner %>
+    <%= link_to "Add a movie", new_movie_path %> 
+<% else %>
+    <ul>
+        <li> <%= link_to "Your movies", movies_path %> </li>
+        <li> show all open tickets you have incl date/time, movie title (link to show movie) </li>
+    </ul>
 <% end %>

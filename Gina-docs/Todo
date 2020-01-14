@@ -1,5 +1,8 @@
-1. add column to movies - currently playing, movie genre
-2. add columns to users - theater_owner, age, name, favorite_genre
+1. add column to movies - currently playing
+2. add columns to users - theater_owner, age, name
+3. create resource showing
+
+f.input :start_time, :as => :time_picker
 
 Rating_to_age 
 Rating_to_age = {

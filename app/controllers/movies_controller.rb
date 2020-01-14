@@ -17,9 +17,11 @@ class MoviesController < ApplicationController
 
     def new
         @movie = Movie.new
+        5.times { @movie.showings.build }
     end
 
     def create 
+        binding.pry
         @movie = Movie.create(movie_params)
         redirect_to movie_path(@movie)
     end
@@ -33,10 +35,11 @@ class MoviesController < ApplicationController
 
     def edit
         @movie = Movie.find_by_id(params[:id])
+        5.times { @movie.showings.build }
     end
 
     def update
-      @movie = Movie.find_by_id(params[:id])
+        @movie = Movie.find_by_id(params[:id])
 
         @movie.update(movie_params)
 
@@ -57,8 +60,9 @@ class MoviesController < ApplicationController
                                   :description, 
                                   :genre,
                                   :release_date,
-                                  :rating)
-                                #   showing: [:showing_id_id,
-                                #   :movie_id])
+                                  :rating,
+                                  showings_attributes:[:id, 
+                                                        :show_date, 
+                                                        :show_time] )
     end
 end

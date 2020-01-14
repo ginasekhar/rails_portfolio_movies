@@ -14,6 +14,18 @@
     <br>
     <%= f.label :release_date, "Release Date" %>
     <%= f.date_field :release_date %>
-    <br>
+    <hr>
+    Add Showtimes: <br>
+    <%= f.fields_for :showings do |showing| %>
+      <%= showing.label :show_date %>
+      <%= showing.date_field :show_date %>
+      <% show_time_list = [ '11AM', '2PM', '5PM', '8PM'] %>
+      <%= showing.label :show_time %>
+      <%= f.select :show_time, show_time_list, selected: '11AM' %>
+      <%# showing.label :show_time %>
+      <%# showing.text_field :show_time %>
+      
+      <br>
+    <% end %>
   <%= f.submit %>
 <% end %>

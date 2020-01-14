@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 2020_01_13_141304) do
 
   create_table "showings", force: :cascade do |t|
     t.date "show_date"
-    t.integer "start_hour"
+    t.string "show_time"
     t.integer "movie_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
