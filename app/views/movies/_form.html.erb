@@ -1,18 +1,19 @@
+<h2> From movies#_form </h2>
 <%= form_for @movie do |f| %>
   <%= f.label :title, "Title" %>
     <%= f.text_field :title %>
+    <br>
+    <% rating_list = [ 'G', 'PG', 'PG-13', 'R'] %>
+    <%= f.select :rating, rating_list, selected: 'R'  %>
     <br>
     <%= f.label :description , "Description" %>
     <%= f.text_area :description %>
     <br>
     <%= f.label :genre, "Genre" %>
-    <%= f.options_for_select :genre %>
+    <%= f.text_field :genre %>
     <br>
     <%= f.label :release_date, "Release Date" %>
     <%= f.date_field :release_date %>
-    <br>
-    <%= f.label :rating, "Rating" %>
-    <%= f.select :rating, options_for_select(["G", "PG", "PG-13", "R"], f.@movie.rating || "R") %>
     <br>
   <%= f.submit %>
 <% end %>

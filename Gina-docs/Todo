@@ -6,8 +6,7 @@ Rating_to_age = {
   "G"  => 8,
   "PG" => 13,
   "PG-13" => 17,
-  "R" => 17,
-  "america" => "http://us.example.com"
+  "R" => 17
 }
 
 Punny Names
