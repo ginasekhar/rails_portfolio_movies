@@ -3,19 +3,24 @@
 <p> <strong> Rating:</strong> <%= @movie.rating %> </p>
 <p> <strong> Description:</strong> <%= @movie.description %> </p>
 <p> <strong> Genre:</strong> <%= @movie.genre %> </p>
-<p> <strong> Release Date:</strong> <%= @movie.release_date.strftime("%a, %b %e, %Y") %> </p>
+<p> <strong> Release Date:</strong> <%= @movie.release_date.strftime('%a, %b %e, %Y') %> </p>
 <br>
+<hr>   
 <h4>Showings:</h2> 
 <% if @movie.showings.any? %> 
-  <ul>
-  <% @movie.showings.each do |showing| %> 
-    <li><strong>
-    <%= link_to "#{showing.show_date} #{showing.show_time}", showing %> 
-    </strong></li> 
-  <% end %> 
-  </ul>
+    <% @movie.showings.each do |showing| %> 
+      <%=link_to "Showtime: #{showing.show_date} #{showing.show_time}", showing_path(showing) %>
+      <br>
+    <% end %> 
 <% else %> 
   <p><strong>There are no showings for this movie</strong></p>
 <% end %>
+<hr> 
+<% if current_user.theater_owner %>
+<%= button_to("Delete Movie", { action: "destroy", id: @movie.id }, 
+method: :delete, data: { confirm: 'This will delete all showings and tickets related to this movie. Are you sure?'}) %>
+<br>
+<%= link_to "Edit Movie/Add Showing", edit_movie_path(@movie) %>
+<% else %> 
 
-<%= link_to "Edit Movie", edit_movie_path(@movie) %>
+<% end %>

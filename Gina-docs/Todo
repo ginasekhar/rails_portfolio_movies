@@ -1,17 +1,7 @@
-1. add column to movies - currently playing
-2. add columns to users - theater_owner, age, name
-3. create resource showing
+1. fields_with_errors
 
-f.input :start_time, :as => :time_picker
 
-Rating_to_age 
-Rating_to_age = {
-  "G"  => 8,
-  "PG" => 13,
-  "PG-13" => 17,
-  "R" => 17
-}
-
+#############################
 Punny Names
 Patty O’Furniture
 Paddy O’Furniture

@@ -6,7 +6,12 @@
     <li> <%= link_to "Login", new_user_session_path %> </li>
   <% else %>
     <li> Logged in as: <%= current_user.email %>
-    <li> <%= link_to "My Movies", movies_path %>
+    <% if current_user.theater_owner %>
+      <li> <%= link_to "Theater Owner View - All movies", movies_path %> </li> 
+    <% else %>
+      <li> <%= link_to "Customer View - Your Movies", movies_path %> </li> 
+      <li> <%= link_to "Your tickets", tickets_path %> </li>
+    <% end %>
     <li><%= link_to "Logout", destroy_user_session_path, method:"delete" %> </li>
   <% end %>
 </ul>

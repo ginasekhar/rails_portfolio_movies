@@ -1,0 +1,10 @@
+<h1>Ticket Details </h1>
+<p> <strong> Movie: </strong> <%= @ticket.showing.movie.title %> </p>
+<p> <strong> Show Date: </strong> <%= @ticket.showing.show_date.strftime('%a, %b %e, %Y') %> </p>
+<p> <strong> Show time: </strong>  <%= @ticket.showing.show_time %> </p>
+<p> <strong> Ticket type: </strong>  <%= @ticket.ticket_type %> </p>
+<p> <strong> Ticket price: </strong>  <%= @ticket.price %> </p>
+<br>
+<%= button_to("Cancel Ticket", { action: "destroy", id: @ticket.id }, 
+method: :delete, data: { confirm: 'You are about to cancel this ticket. Are you sure?'}) %>
+<br>

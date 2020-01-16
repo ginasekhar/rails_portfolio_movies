@@ -4,7 +4,7 @@
     <%= f.text_field :title %>
     <br>
     <% rating_list = [ 'G', 'PG', 'PG-13', 'R'] %>
-    <%= f.select :rating, rating_list, selected: 'R'  %>
+    <%= f.select :rating, rating_list  %>
     <br>
     <%= f.label :description , "Description" %>
     <%= f.text_area :description %>
@@ -15,16 +15,13 @@
     <%= f.label :release_date, "Release Date" %>
     <%= f.date_field :release_date %>
     <hr>
-    Add Showtimes: <br>
+    <h4> Add Showtimes: </h4>
     <%= f.fields_for :showings do |showing| %>
       <%= showing.label :show_date %>
       <%= showing.date_field :show_date %>
       <% show_time_list = [ '11AM', '2PM', '5PM', '8PM'] %>
       <%= showing.label :show_time %>
-      <%= f.select :show_time, show_time_list, selected: '11AM' %>
-      <%# showing.label :show_time %>
-      <%# showing.text_field :show_time %>
-      
+      <%= showing.select :show_time, show_time_list, { include_blank: true } %>  
       <br>
     <% end %>
   <%= f.submit %>

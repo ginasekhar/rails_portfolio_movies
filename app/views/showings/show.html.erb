@@ -1,0 +1,16 @@
+<h1>Showing Details </h1>
+<p> <strong> Movie: </strong> <%= @showing.movie.title %> </p>
+<p> <strong> Show Date: </strong> <%= @showing.show_date.strftime("%a, %b %e, %Y") %> </p>
+<p> <strong> Show time: </strong>  <%= @showing.show_time %> </p>
+<br>
+
+<% if current_user.theater_owner %>
+    <p> Should print a summary of ticket sales for this showing </p>
+    <%= link_to "Tickets for this showing", showing_tickets_path(@showing) %>
+    
+    <%= button_to("Delete Showing", { action: "destroy", id: @showing.id }, 
+method: :delete, data: { confirm: 'This will delete this showing and all associated tickets. Are you sure?'}) %>
+<% else %>
+    <%= button_to("Buy Ticket", new_showing_ticket_path(@showing), { method: "get", action:"new"}) %>
+<% end %>
+<br>

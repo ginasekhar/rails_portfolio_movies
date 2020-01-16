@@ -1,0 +1,11 @@
+<h2> From tickets#new </h2>
+<h1>Buy a ticket for <%= @showing.show_date %> <%= @showing.show_time %></h1>
+<br>
+<%= form_for @ticket  do |f| %>
+<p>What type of ticket are you purchasing? </p>
+  <% ticket_type_list = [ 'Adult', 'Child', 'Senior', 'Student'] %>
+    <%= f.select :ticket_type, ticket_type_list, selected: 'Adult'  %>
+    <%= f.hidden_field :showing_id %>
+  <br />
+  <%= f.submit %>
+<% end %>
