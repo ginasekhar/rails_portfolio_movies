@@ -1,3 +1,15 @@
+<% if @showing && @showing.errors.any? %>
+  <div id = "error_explanation">
+    <div class = "alert alert-danger">
+      The form contains <%= pluralize(@showing.errors.count, "error") %>.
+    </div>
+    <ul>
+      <% @showing.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
 <h1>Showing Details </h1>
 <p> <strong> Movie: </strong> <%= @showing.movie.title %> </p>
 <p> <strong> Show Date: </strong> <%= @showing.show_date.strftime("%a, %b %e, %Y") %> </p>
@@ -5,11 +17,12 @@
 <br>
 
 <% if current_user.theater_owner %>
-    <p> Should print a summary of ticket sales for this showing </p>
-    <%= link_to "Tickets for this showing", showing_tickets_path(@showing) %>
-    
+    <% if @showing.tickets.any? %>
+        <%= link_to "Click to see tickets sold for this showing", showing_tickets_path(@showing) %>
+    <% end %>
+    <br><br>
     <%= button_to("Delete Showing", { action: "destroy", id: @showing.id }, 
-method: :delete, data: { confirm: 'This will delete this showing and all associated tickets. Are you sure?'}) %>
+method: :delete, data: { confirm: 'Are you sure you want to delete this showing ?'}) %>
 <% else %>
     <%= button_to("Buy Ticket", new_showing_ticket_path(@showing), { method: "get", action:"new"}) %>
 <% end %>

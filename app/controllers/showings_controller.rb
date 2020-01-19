@@ -1,50 +1,29 @@
 class ShowingsController < ApplicationController
-    
-    def index
-        @showings = Showing.all
-      end
-    
-      def show
-        @showing = Showing.find(params[:id])
-      end
-    
-      def new
-        # THIS NEEDS TO CHANGE TO BUILD
-        @showing = Showing.new
+  before_action :authenticate_user!
+  before_action :ensure_theater_owner!, except: [:show, :index]
 
-      end
-    
-      def create
-        @showing = Showing.new(showing_params)
-    
-        if @showing.save
-          redirect_to @showing
-        else
-          render :new
-        end
-      end
-    
-      def edit
-        @showing = Showing.find(params[:id])
-      end
-    
-      def update
-        @showing = Showing.find(params[:id])
-    
-        @showing.update(showing_params)
-    
-        if @showing.save
-          redirect_to @showing
-        else
-          render :edit
-        end
+      def show
+        @showing = Showing.find_by(id: params[:id])
+        #flash[:error] =  @showing.errors.full_messages.to_sentence if !@showing  
       end
     
       def destroy
-        @showing = Showing.find(params[:id])
-        @showing.destroy
-        flash[:notice] = "Showing deleted."
-        redirect_to showings_path
+        if @showing = Showing.find_by(id:params[:id])
+          if @showing.tickets.any?
+            flash[:error] = "Cannot delete showing with tickets"
+            redirect_to @showing
+          elsif @showing.destroy
+            flash[:notice] = "Showing deleted."
+            redirect_to @showing.movie
+          else 
+            flash[:error] =  @showing.errors.full_messages.to_sentence
+            redirect_to @showing
+          end
+        else
+          flash[:error] = "Cannot delete showing with tickets"
+        end
+     
+        binding.pry
       end
 
       

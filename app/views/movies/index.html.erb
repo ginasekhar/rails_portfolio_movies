@@ -1,5 +1,7 @@
+<%= render 'application/errors' , object: @movie %>
+
 <% if current_user.theater_owner %>
-    <h1> All movies</h1>
+    <h2> All movies</h2>
 <% else %>
     <h1> Movies appropriate for your age : <%= current_user.age %> </h1> 
 <% end %>

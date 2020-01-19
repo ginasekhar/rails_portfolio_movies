@@ -4,10 +4,15 @@ class Movie < ApplicationRecord
     has_many :showings
     has_many :tickets, through: :showings
 
-    accepts_nested_attributes_for :showings, allow_destroy: true, :reject_if => :all_blank
+    before_destroy :check_for_showings
 
-    validates :title, presence: true
+    accepts_nested_attributes_for :showings, :reject_if => :all_blank
+
+    validates :title, presence: true, uniqueness: true
+    validates :release_date, presence: true
+    
     validates :description, length: { maximum: 1000 }
+
     validates :rating, presence: true
     validates_inclusion_of :rating, :in => %w(G PG PG-13 R),:message => "{{value}} is not a valid rating"
     
@@ -24,7 +29,14 @@ class Movie < ApplicationRecord
         end
         appropriate_ratings
     end
+    
+    private
 
+    def check_for_showings
+      if self.showings.any? 
+        errors[:base] << "cannot delete movie that has showings"
+      end
+    end
     # def showings_attributes=(showings_hash)
     #     binding.pry
     #     showings_hash.values.each do |showing_attribute|

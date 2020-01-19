@@ -1,7 +1,10 @@
 <% if current_user.theater_owner %>
-    <h1> All tickets for this showing:</h1>
+    <h1> <strong> Movie: </strong><%= @showing.movie.title %> 
+    <strong> Show: </strong> <%= @showing.show_date %> <%= @showing.show_time %> </h1>
+    <strong>Total revenue for this show: </strong>$ <%= @showing_revenue %> <br>
+    <h2> All tickets for this showing:</h2>
  <% else %>
-    <h1> All tickets belonging to <%= current_user.name %> </h2>
+    <h2> All tickets belonging to <%= current_user.name %> </h2>
 <% end %>
 
 <% if @tickets_count == 0 %>
@@ -12,10 +15,13 @@
         <% @tickets.each do |ticket| %>
         <li>
             <% if current_user.theater_owner %>
-                   Ticket No. <%= ticket.id %>  - <%= ticket.user.name %>  <%= ticket.showing.movie.title %> <%= ticket.showing.show_date %> <%= ticket.showing.show_time %> 
+                <strong> Ticket Number: </strong> <%= ticket.id %> 
+                <strong> Type:</strong> <%= ticket.ticket_type %>
+                <strong> Customer: </strong><%= ticket.user.name %> 
                     <%=link_to "Ticket Details" ,ticket_path(ticket) %> 
             <% else %>
-                <%= ticket.showing.movie.title %> <%= ticket.showing.show_date %> <%= ticket.showing.show_time %> 
+                <strong><%= ticket.showing.movie.title %></strong> 
+                <strong> Show: </strong> <%= ticket.showing.show_date %> <%= ticket.showing.show_time %>  
                     <%=link_to "Ticket Details" ,ticket_path(ticket) %> 
             <% end %>
         </li>

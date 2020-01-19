@@ -1,8 +1,9 @@
-<h2> From tickets#new </h2>
+<%= render 'application/errors' , object: @ticket %>
+
 <h1>Buy a ticket for <%= @showing.show_date %> <%= @showing.show_time %></h1>
 <br>
-<%= form_for @ticket  do |f| %>
 <p>What type of ticket are you purchasing? </p>
+<%= form_for [@showing, @ticket] do |f| %>
   <% ticket_type_list = [ 'Adult', 'Child', 'Senior', 'Student'] %>
     <%= f.select :ticket_type, ticket_type_list, selected: 'Adult'  %>
     <%= f.hidden_field :showing_id %>

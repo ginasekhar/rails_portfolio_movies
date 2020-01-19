@@ -3,17 +3,22 @@ class TicketsController < ApplicationController
     
     @@ticket_price_hash = {"Adult" => 20.00, "Child" => 8.00, "Senior" => 12.00, "Student" => 10.00}
     def index
-        #theater owner get routed here 
-        
         if params[:showing_id]
+            #theater owner get routed here 
             @showing = Showing.find_by_id(params[:showing_id])
+            if !@showing
+                flash[:error] =  @showing.errors.full_messages.to_sentence
+                binding.pry
+                redirect_to showings_path(@movie)
+            end
+
             if current_user.theater_owner
                 @tickets = @showing.tickets
                 @tickets_count = @tickets.count
                 @showing_revenue = @showing.tickets.sum(:price)
-                
             end
         else
+            # regular customer
             @tickets = Ticket.my_tickets(current_user)
             @tickets_count = @tickets.count
         end
@@ -27,24 +32,44 @@ class TicketsController < ApplicationController
     end
 
     def create 
-        @ticket = Ticket.new(ticket_params)
-        @ticket.user = current_user
-        @ticket.price = @@ticket_price_hash[@ticket.ticket_type]
-        @ticket.save
         #binding.pry
-        redirect_to tickets_path
-
+        @ticket = current_user.tickets.build(ticket_params)
+        
+        if @ticket && @ticket.valid? && @ticket.save 
+            @ticket.price = @@ticket_price_hash[@ticket.ticket_type]
+            flash[:notice] = "Ticket purchased"
+            redirect_to tickets_path
+        else
+            flash[:error] = @ticket.errors.full_messages.to_sentence
+            render :new
+        end
     end
 
     def show
-        @ticket = Ticket.find_by_id(params[:id])
+        if current_user.theater_owner
+            @ticket = Ticket.find_by_id(params[:id])
+        else
+            @ticket = Ticket.my_tickets(current_user).find_by_id(params[:id])
+        end
+        if !@ticket
+            flash[:error] = "Ticket not found"
+            redirect_to tickets_path
+        end 
     end
 
     def destroy
-        @ticket = Ticket.find_by_id(params[:id])
-        @ticket.destroy
-        #flash[:notice] = "Ticket cancelled"
-        redirect_to tickets_path
+        if current_user.theater_owner
+            @ticket = Ticket.find_by_id(params[:id])
+        else
+            @ticket = Ticket.my_tickets(current_user).find_by_id(params[:id])
+        end
+        if @ticket && @ticket.destroy
+            flash[:notice] = "Ticket cancelled"
+            redirect_to tickets_path
+        else
+            flash[:error] = "Ticket not cancelled"
+            redirect_to tickets_path
+        end
     end
 
     private
