@@ -4,7 +4,6 @@ class ShowingsController < ApplicationController
 
       def show
         @showing = Showing.find_by(id: params[:id])
-        #flash[:error] =  @showing.errors.full_messages.to_sentence if !@showing  
       end
     
       def destroy
@@ -22,8 +21,6 @@ class ShowingsController < ApplicationController
         else
           flash[:error] = "Cannot delete showing with tickets"
         end
-     
-        binding.pry
       end
 
       

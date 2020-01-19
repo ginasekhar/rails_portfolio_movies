@@ -22,3 +22,8 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+
+<%# if notice %> <div class="alert alert-info"> <%= notice %> </div> <%end%>
+      <%# if alert %><div class="alert alert-warning"> <%= alert %> </div> <%end%>
+

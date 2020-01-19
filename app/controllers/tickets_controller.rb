@@ -8,7 +8,7 @@ class TicketsController < ApplicationController
             @showing = Showing.find_by_id(params[:showing_id])
             if !@showing
                 flash[:error] =  @showing.errors.full_messages.to_sentence
-                binding.pry
+                #binding.pry
                 redirect_to showings_path(@movie)
             end
 
@@ -34,9 +34,9 @@ class TicketsController < ApplicationController
     def create 
         #binding.pry
         @ticket = current_user.tickets.build(ticket_params)
-        
+        @ticket.price = @@ticket_price_hash[@ticket.ticket_type]
         if @ticket && @ticket.valid? && @ticket.save 
-            @ticket.price = @@ticket_price_hash[@ticket.ticket_type]
+            
             flash[:notice] = "Ticket purchased"
             redirect_to tickets_path
         else
@@ -53,7 +53,11 @@ class TicketsController < ApplicationController
         end
         if !@ticket
             flash[:error] = "Ticket not found"
-            redirect_to tickets_path
+            if current_user.theater_owner
+                redirect_to showing_tickets_path(@showing)
+            else
+                redirect_to tickets_path  
+            end
         end 
     end
 
@@ -65,10 +69,14 @@ class TicketsController < ApplicationController
         end
         if @ticket && @ticket.destroy
             flash[:notice] = "Ticket cancelled"
-            redirect_to tickets_path
+            
         else
-            flash[:error] = "Ticket not cancelled"
-            redirect_to tickets_path
+            flash[:error] = "Ticket not cancelled"  
+        end
+        if current_user.theater_owner
+            redirect_to showing_tickets_path(@showing)
+        else
+            redirect_to tickets_path  
         end
     end
 
